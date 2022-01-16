@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java -jar -Dlogback.configurationFile=/Users/jm3u8_maker/config/logback.xml /Users/jm3u8_maker/lib/jm3u8_maker.jar Jm3u8MakerMain /Users/jm3u8_maker/config/user_conf.ini
+java -jar -Dlogback.configurationFile=/Users/jamesj/GIT_PROJECTS/JM3U8_MAKER/src/main/resources/config/logback.xml /Users/jamesj/GIT_PROJECTS/JM3U8_MAKER/out/artifacts/JM3U8_MAKER_jar/JM3U8_MAKER.jar Jm3u8MakerMain /Users/jamesj/GIT_PROJECTS/JM3U8_MAKER/src/main/resources/config/user_conf.ini $1 $2 $3 $4 $5

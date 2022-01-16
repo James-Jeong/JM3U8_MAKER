@@ -9,8 +9,10 @@ public class Jm3u8MakerMain {
     private static final Logger logger = LoggerFactory.getLogger(Jm3u8MakerMain.class);
 
     public static void main(String[] args) {
+        logger.debug("[START]");
+
         if (args.length != 7) {
-            System.out.println(
+            logger.error(
                     "Argument Error. \n" +
                     "(&0: Jm3u8MakerMain, &1: config_path, \n" +
                     "&2: SourceFilePath, &3: DestinationFilePath, \n" +
@@ -20,31 +22,31 @@ public class Jm3u8MakerMain {
                             "~/test1/Seoul.mp4 \n" +
                             "~/test2/Seoul.m3u8 1 0 10"
             );
-            return;
         } else {
             int index = 0;
             for (String argument : args) {
+                if (argument == null) { continue; }
                 logger.debug("[{}] [{}]", index++, argument);
             }
-            logger.debug("\n");
+
+            String configPath = args[1].trim();
+            logger.debug("| Config path: {}", configPath);
+            ConfigManager configManager = new ConfigManager(configPath);
+
+            AppInstance appInstance = AppInstance.getInstance();
+            appInstance.setConfigManager(configManager);
+
+            FfmpegManager ffmpegManager = new FfmpegManager();
+            ffmpegManager.convertMp4ToM3u8(
+                    args[2].trim(), // srcFilePath
+                    args[3].trim(), // destTotalFilePath
+                    Long.parseLong(args[4].trim()), // fileTime
+                    Long.parseLong(args[5].trim()), // startTime
+                    Long.parseLong(args[6].trim()) // endTime
+            );
         }
 
-        String configPath = args[1].trim();
-        logger.debug("| Config path: {}", configPath);
-        ConfigManager configManager = new ConfigManager(configPath);
-
-        AppInstance appInstance = AppInstance.getInstance();
-        appInstance.setConfigManager(configManager);
-
-        FfmpegManager ffmpegManager = new FfmpegManager();
-        ffmpegManager.convertMp4ToM3u8(
-                args[2].trim(), // srcFilePath
-                args[3].trim(), // destTotalFilePath
-                Long.parseLong(args[4].trim()), // fileTime
-                Long.parseLong(args[5].trim()), // startTime
-                Long.parseLong(args[6].trim()) // endTime
-        );
-        logger.debug("\n");
+        logger.debug("[END]");
     }
 
 }
