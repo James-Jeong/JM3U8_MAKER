@@ -26,18 +26,10 @@ public class ConfigManager {
     // Field String
     public static final String FIELD_FFMPEG_PATH = "FFMPEG_PATH";
     public static final String FIELD_FFPROBE_PATH = "FFPROBE_PATH";
-    public static final String FIELD_HLS_LIST_SIZE = "HLS_LIST_SIZE";
-    public static final String FIELD_HLS_TIME = "HLS_TIME";
-    public static final String FIELD_DELETE_M3U8 = "DELETE_M3U8";
-    public static final String FIELD_DELETE_TS = "DELETE_TS";
 
     // FFMPEG
     private String ffmpegPath = null;
     private String ffprobePath = null;
-    private int hlsListSize = 0;
-    private int hlsTime = 0;
-    private boolean deleteM3u8 = true;
-    private boolean deleteTs = true;
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -82,21 +74,6 @@ public class ConfigManager {
             logger.error("Fail to load [{}-{}].", SECTION_FFMPEG, FIELD_FFPROBE_PATH);
             System.exit(1);
         }
-
-        this.hlsListSize = Integer.parseInt(getIniValue(SECTION_FFMPEG, FIELD_HLS_LIST_SIZE));
-        if (this.hlsListSize <= 0) {
-            logger.error("Fail to load [{}-{}]. ({})", SECTION_FFMPEG, FIELD_HLS_LIST_SIZE, hlsListSize);
-            System.exit(1);
-        }
-
-        this.hlsTime = Integer.parseInt(getIniValue(SECTION_FFMPEG, FIELD_HLS_TIME));
-        if (this.hlsTime <= 0) {
-            logger.error("Fail to load [{}-{}]. ({})", SECTION_FFMPEG, FIELD_HLS_TIME, hlsTime);
-            System.exit(1);
-        }
-
-        this.deleteM3u8 = Boolean.parseBoolean(getIniValue(SECTION_FFMPEG, FIELD_DELETE_M3U8));
-        this.deleteTs = Boolean.parseBoolean(getIniValue(SECTION_FFMPEG, FIELD_DELETE_TS));
 
         logger.debug("Load [{}] config...(OK)", SECTION_FFMPEG);
     }
@@ -159,35 +136,4 @@ public class ConfigManager {
         this.ffprobePath = ffprobePath;
     }
 
-    public int getHlsListSize() {
-        return hlsListSize;
-    }
-
-    public void setHlsListSize(int hlsListSize) {
-        this.hlsListSize = hlsListSize;
-    }
-
-    public int getHlsTime() {
-        return hlsTime;
-    }
-
-    public void setHlsTime(int hlsTime) {
-        this.hlsTime = hlsTime;
-    }
-
-    public boolean isDeleteM3u8() {
-        return deleteM3u8;
-    }
-
-    public void setDeleteM3u8(boolean deleteM3u8) {
-        this.deleteM3u8 = deleteM3u8;
-    }
-
-    public boolean isDeleteTs() {
-        return deleteTs;
-    }
-
-    public void setDeleteTs(boolean deleteTs) {
-        this.deleteTs = deleteTs;
-    }
 }
