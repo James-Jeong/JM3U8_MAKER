@@ -11,7 +11,7 @@ public class Jm3u8MakerMain {
     public static void main(String[] args) {
         logger.debug("[START]");
 
-        if (args.length != 7) {
+        if (args.length != 5) {
             logger.error(
                     "Argument Error. \n" +
                     "(&0: Jm3u8MakerMain, &1: config_path, \n" +

@@ -11,7 +11,7 @@
     <!--    </appender>-->
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOGS_ABSOLUTE_PATH}/urtsp.log</file>
+        <file>${LOGS_ABSOLUTE_PATH}/m3u8_maker.log</file>
         <encoder>
             <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5p] [%t] %m - \(%F:%L\)%n</pattern>
         </encoder>
