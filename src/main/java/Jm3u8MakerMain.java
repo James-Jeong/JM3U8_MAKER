@@ -11,7 +11,7 @@ public class Jm3u8MakerMain {
     public static void main(String[] args) {
         logger.debug("[START]");
 
-        if (args.length != 5) {
+        if (args.length != 4) {
             logger.error(
                     "Argument Error. \n" +
                     "(&0: Jm3u8MakerMain, &1: config_path, \n" +
@@ -19,8 +19,7 @@ public class Jm3u8MakerMain {
                             "Ex) Jm3u8MakerMain \n" +
                             "~/config/user_conf.ini \n" +
                             "~/test1/Seoul.mp4 \n" +
-                            "~/test2/Seoul.m3u8 \n" +
-                            "1"
+                            "~/test2/Seoul.m3u8"
             );
         } else {
             int index = 0;
@@ -38,18 +37,19 @@ public class Jm3u8MakerMain {
 
             String srcFilePath = args[2].trim();
             String destFilePath = args[3].trim();
-            long fileTime = Long.parseLong(args[4].trim());
-            if (fileTime > 0) {
-                FfmpegManager ffmpegManager = new FfmpegManager();
+
+            FfmpegManager ffmpegManager = new FfmpegManager();
+            long endTime = (long) ffmpegManager.getFileTime(srcFilePath);
+            if (endTime > 0) {
                 ffmpegManager.convertMp4ToM3u8(
                         srcFilePath, // srcFilePath
                         destFilePath, // destTotalFilePath
-                        fileTime, // fileTime
+                        endTime / 10, // fileTime
                         0, // startTime
-                        (long) ffmpegManager.getFileTime(srcFilePath) // endTime
+                        endTime // endTime
                 );
             } else {
-                logger.error("File time is negative. Fail to get m3u8. (fileTime={})", fileTime);
+                logger.error("File time is not positive. Fail to get m3u8. (endTime={})", endTime);
             }
         }
 
