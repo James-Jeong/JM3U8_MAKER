@@ -15,12 +15,12 @@ public class Jm3u8MakerMain {
             logger.error(
                     "Argument Error. \n" +
                     "(&0: Jm3u8MakerMain, &1: config_path, \n" +
-                    "&2: SourceFilePath, &3: DestinationFilePath, \n" +
-                    "&4: FileTime, &5: StartTime, &6: EndTime)\n" +
+                    "&2: SourceFilePath, &3: DestinationFilePath, &4:FileTime)\n" +
                             "Ex) Jm3u8MakerMain \n" +
                             "~/config/user_conf.ini \n" +
                             "~/test1/Seoul.mp4 \n" +
-                            "~/test2/Seoul.m3u8 1 0 10"
+                            "~/test2/Seoul.m3u8 \n" +
+                            "1"
             );
         } else {
             int index = 0;
@@ -36,14 +36,21 @@ public class Jm3u8MakerMain {
             AppInstance appInstance = AppInstance.getInstance();
             appInstance.setConfigManager(configManager);
 
-            FfmpegManager ffmpegManager = new FfmpegManager();
-            ffmpegManager.convertMp4ToM3u8(
-                    args[2].trim(), // srcFilePath
-                    args[3].trim(), // destTotalFilePath
-                    Long.parseLong(args[4].trim()), // fileTime
-                    Long.parseLong(args[5].trim()), // startTime
-                    Long.parseLong(args[6].trim()) // endTime
-            );
+            String srcFilePath = args[2].trim();
+            String destFilePath = args[3].trim();
+            long fileTime = Long.parseLong(args[4].trim());
+            if (fileTime > 0) {
+                FfmpegManager ffmpegManager = new FfmpegManager();
+                ffmpegManager.convertMp4ToM3u8(
+                        srcFilePath, // srcFilePath
+                        destFilePath, // destTotalFilePath
+                        fileTime, // fileTime
+                        0, // startTime
+                        (long) ffmpegManager.getFileTime(srcFilePath) // endTime
+                );
+            } else {
+                logger.error("File time is negative. Fail to get m3u8. (fileTime={})", fileTime);
+            }
         }
 
         logger.debug("[END]");
