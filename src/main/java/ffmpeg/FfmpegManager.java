@@ -100,16 +100,12 @@ public class FfmpegManager {
                 ffprobe = new FFprobe(configManager.getFfprobePath());
             }
 
-            if (fileTime < 10) {
-                fileTime += 10;
-            }
-
             FFmpegBuilder builder;
             if (endTime != 0) {
                 builder = new FFmpegBuilder().overrideOutputFiles(true).setInput(srcFilePath).addOutput(destTotalFilePath).setFormat("hls")
                         //.addExtraArgs("-preset", "ultrafast").addExtraArgs("-flags").addExtraArgs("-global_header")
                         .addExtraArgs("-hls_list_size", String.valueOf(0))
-                        .addExtraArgs("-hls_time", String.valueOf(fileTime / 10))
+                        .addExtraArgs("-hls_time", String.valueOf(fileTime))
                         .addExtraArgs("-hls_flags", "split_by_time")
                         //.addExtraArgs("-hls_flags", "omit_endlist")
                         //.addExtraArgs("-start_number", String.valueOf())
