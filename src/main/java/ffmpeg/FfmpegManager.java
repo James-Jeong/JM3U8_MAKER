@@ -101,10 +101,13 @@ public class FfmpegManager {
             }
 
             int fps = configManager.getFps();
+            int gop = configManager.getGop();
+
             FFmpegBuilder builder;
             if (endTime != 0) {
                 builder = new FFmpegBuilder().overrideOutputFiles(true).setInput(srcFilePath).addOutput(destTotalFilePath).setFormat("hls")
                         .addExtraArgs("-r", String.valueOf(fps))
+                        .addExtraArgs("-g", String.valueOf(gop))
                         .addExtraArgs("-hls_list_size", String.valueOf(0))
                         .addExtraArgs("-hls_time", String.valueOf(fileTime))
                         .addExtraArgs("-hls_flags", "split_by_time")
@@ -113,6 +116,7 @@ public class FfmpegManager {
             } else {
                 builder = new FFmpegBuilder().overrideOutputFiles(true).setInput(srcFilePath).addOutput(destTotalFilePath).setFormat("hls")
                         .addExtraArgs("-r", String.valueOf(fps))
+                        .addExtraArgs("-g", String.valueOf(gop))
                         .addExtraArgs("-hls_list_size", String.valueOf(0))
                         .addExtraArgs("-hls_time", String.valueOf(fileTime / 10))
                         .addExtraArgs("-hls_flags", "split_by_time")

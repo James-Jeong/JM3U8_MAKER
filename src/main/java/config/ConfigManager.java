@@ -27,11 +27,13 @@ public class ConfigManager {
     public static final String FIELD_FFMPEG_PATH = "FFMPEG_PATH";
     public static final String FIELD_FFPROBE_PATH = "FFPROBE_PATH";
     public static final String FIELD_FPS = "FPS";
+    public static final String FIELD_GOP = "GOP";
 
     // FFMPEG
     private String ffmpegPath = null;
     private String ffprobePath = null;
     private int fps = 0;
+    private int gop = 0;
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -86,6 +88,27 @@ public class ConfigManager {
             if (fps <= 0) {
                 logger.error("Fail to load [{}-{}]. FPS is not positive. (fps={})", SECTION_FFMPEG, FIELD_FPS, fps);
                 System.exit(1);
+            }
+
+            if (fps > 1000) {
+                fps = 1000;
+            }
+        }
+
+        // GOP Size is up to 30 (15 is also very common)
+        String gopString = getIniValue(SECTION_FFMPEG, FIELD_GOP);
+        if (gopString == null) {
+            logger.error("Fail to load [{}-{}].", SECTION_FFMPEG, FIELD_GOP);
+            System.exit(1);
+        } else{
+            gop = Integer.parseInt(gopString);
+            if (gop <= 0) {
+                logger.error("Fail to load [{}-{}]. GOP is not positive. (fps={})", SECTION_FFMPEG, FIELD_GOP, gop);
+                System.exit(1);
+            }
+
+            if (gop > 30) {
+                gop = 15;
             }
         }
 
@@ -156,5 +179,13 @@ public class ConfigManager {
 
     public void setFps(int fps) {
         this.fps = fps;
+    }
+
+    public int getGop() {
+        return gop;
+    }
+
+    public void setGop(int gop) {
+        this.gop = gop;
     }
 }
