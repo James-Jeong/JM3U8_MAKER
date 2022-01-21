@@ -26,10 +26,12 @@ public class ConfigManager {
     // Field String
     public static final String FIELD_FFMPEG_PATH = "FFMPEG_PATH";
     public static final String FIELD_FFPROBE_PATH = "FFPROBE_PATH";
+    public static final String FIELD_FPS = "FPS";
 
     // FFMPEG
     private String ffmpegPath = null;
     private String ffprobePath = null;
+    private int fps = 0;
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -73,6 +75,18 @@ public class ConfigManager {
         if (this.ffprobePath == null) {
             logger.error("Fail to load [{}-{}].", SECTION_FFMPEG, FIELD_FFPROBE_PATH);
             System.exit(1);
+        }
+
+        String fpsString = getIniValue(SECTION_FFMPEG, FIELD_FPS);
+        if (fpsString == null) {
+            logger.error("Fail to load [{}-{}].", SECTION_FFMPEG, FIELD_FPS);
+            System.exit(1);
+        } else{
+            fps = Integer.parseInt(fpsString);
+            if (fps <= 0) {
+                logger.error("Fail to load [{}-{}]. FPS is not positive. (fps={})", SECTION_FFMPEG, FIELD_FPS, fps);
+                System.exit(1);
+            }
         }
 
         logger.debug("Load [{}] config...(OK)", SECTION_FFMPEG);
@@ -136,4 +150,11 @@ public class ConfigManager {
         this.ffprobePath = ffprobePath;
     }
 
+    public int getFps() {
+        return fps;
+    }
+
+    public void setFps(int fps) {
+        this.fps = fps;
+    }
 }

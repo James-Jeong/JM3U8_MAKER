@@ -100,33 +100,22 @@ public class FfmpegManager {
                 ffprobe = new FFprobe(configManager.getFfprobePath());
             }
 
+            int fps = configManager.getFps();
             FFmpegBuilder builder;
             if (endTime != 0) {
                 builder = new FFmpegBuilder().overrideOutputFiles(true).setInput(srcFilePath).addOutput(destTotalFilePath).setFormat("hls")
-                        //.addExtraArgs("-preset", "ultrafast").addExtraArgs("-flags").addExtraArgs("-global_header")
-                        .addExtraArgs("-r", String.valueOf(60))
-                        //.addExtraArgs("-framerate", String.valueOf(60))
-                        //.addExtraArgs("-frames:v", String.valueOf(60))
+                        .addExtraArgs("-r", String.valueOf(fps))
                         .addExtraArgs("-hls_list_size", String.valueOf(0))
                         .addExtraArgs("-hls_time", String.valueOf(fileTime))
                         .addExtraArgs("-hls_flags", "split_by_time")
-                        //.addExtraArgs("-hls_flags", "omit_endlist")
-                        //.addExtraArgs("-start_number", String.valueOf())
-                        //.addExtraArgs("-hls_flags", "discont_start")
                         .addExtraArgs("-t", String.valueOf(endTime))
                         .done();
             } else {
                 builder = new FFmpegBuilder().overrideOutputFiles(true).setInput(srcFilePath).addOutput(destTotalFilePath).setFormat("hls")
-                        //.addExtraArgs("-preset", "ultrafast").addExtraArgs("-flags").addExtraArgs("-global_header")
-                        .addExtraArgs("-r", String.valueOf(60))
-                        //.addExtraArgs("-framerate", String.valueOf(60))
-                        //.addExtraArgs("-frames:v", String.valueOf(60))
+                        .addExtraArgs("-r", String.valueOf(fps))
                         .addExtraArgs("-hls_list_size", String.valueOf(0))
                         .addExtraArgs("-hls_time", String.valueOf(fileTime / 10))
                         .addExtraArgs("-hls_flags", "split_by_time")
-                        //.addExtraArgs("-hls_flags", "omit_endlist")
-                        //.addExtraArgs("-start_number", String.valueOf())
-                        //.addExtraArgs("-hls_flags", "discont_start")
                         .done();
             }
 
