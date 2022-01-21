@@ -40,11 +40,11 @@ public class Jm3u8MakerMain {
 
             FfmpegManager ffmpegManager = new FfmpegManager();
             long endTime = (long) ffmpegManager.getFileTime(srcFilePath);
-            long fileTime = endTime / 10;
+            long fileTime = 10; /*endTime / 10;
             if (fileTime < 10) {
                 fileTime += 10;
-            }
-            logger.debug("HLS-INTERVAL: {}", endTime / 10);
+            }*/
+            logger.debug("HLS-INTERVAL: {}", fileTime);
             logger.debug("END-TIME: {}", endTime);
 
             if (endTime > 0) {

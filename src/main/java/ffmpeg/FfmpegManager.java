@@ -104,6 +104,9 @@ public class FfmpegManager {
             if (endTime != 0) {
                 builder = new FFmpegBuilder().overrideOutputFiles(true).setInput(srcFilePath).addOutput(destTotalFilePath).setFormat("hls")
                         //.addExtraArgs("-preset", "ultrafast").addExtraArgs("-flags").addExtraArgs("-global_header")
+                        .addExtraArgs("-r", String.valueOf(60))
+                        //.addExtraArgs("-framerate", String.valueOf(60))
+                        //.addExtraArgs("-frames:v", String.valueOf(60))
                         .addExtraArgs("-hls_list_size", String.valueOf(0))
                         .addExtraArgs("-hls_time", String.valueOf(fileTime))
                         .addExtraArgs("-hls_flags", "split_by_time")
@@ -115,6 +118,9 @@ public class FfmpegManager {
             } else {
                 builder = new FFmpegBuilder().overrideOutputFiles(true).setInput(srcFilePath).addOutput(destTotalFilePath).setFormat("hls")
                         //.addExtraArgs("-preset", "ultrafast").addExtraArgs("-flags").addExtraArgs("-global_header")
+                        .addExtraArgs("-r", String.valueOf(60))
+                        //.addExtraArgs("-framerate", String.valueOf(60))
+                        //.addExtraArgs("-frames:v", String.valueOf(60))
                         .addExtraArgs("-hls_list_size", String.valueOf(0))
                         .addExtraArgs("-hls_time", String.valueOf(fileTime / 10))
                         .addExtraArgs("-hls_flags", "split_by_time")
