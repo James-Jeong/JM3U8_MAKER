@@ -102,7 +102,7 @@ public class ConfigManager {
             System.exit(1);
         } else{
             gop = Integer.parseInt(gopString);
-            if (gop <= 0) {
+            if (gop < 0) {
                 logger.error("Fail to load [{}-{}]. GOP is not positive. (fps={})", SECTION_FFMPEG, FIELD_GOP, gop);
                 System.exit(1);
             }
