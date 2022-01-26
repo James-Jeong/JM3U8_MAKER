@@ -91,7 +91,7 @@ public class ConfigManager {
             }
 
             if (fps > 1000) {
-                fps = 1000;
+                fps = 30;
             }
         }
 
@@ -108,7 +108,7 @@ public class ConfigManager {
             }
 
             if (gop > 30) {
-                gop = 15;
+                gop = 16;
             }
         }
 
