@@ -83,7 +83,7 @@ public class ConfigManager {
         if (fpsString == null) {
             logger.error("Fail to load [{}-{}].", SECTION_FFMPEG, FIELD_FPS);
             System.exit(1);
-        } else{
+        } else {
             fps = Integer.parseInt(fpsString);
             if (fps <= 0) {
                 logger.error("Fail to load [{}-{}]. FPS is not positive. (fps={})", SECTION_FFMPEG, FIELD_FPS, fps);
@@ -100,7 +100,7 @@ public class ConfigManager {
         if (gopString == null) {
             logger.error("Fail to load [{}-{}].", SECTION_FFMPEG, FIELD_GOP);
             System.exit(1);
-        } else{
+        } else {
             gop = Integer.parseInt(gopString);
             if (gop < 0) {
                 logger.error("Fail to load [{}-{}]. GOP is not positive. (fps={})", SECTION_FFMPEG, FIELD_GOP, gop);
@@ -161,31 +161,16 @@ public class ConfigManager {
         return ffmpegPath;
     }
 
-    public void setFfmpegPath(String ffmpegPath) {
-        this.ffmpegPath = ffmpegPath;
-    }
-
     public String getFfprobePath() {
         return ffprobePath;
-    }
-
-    public void setFfprobePath(String ffprobePath) {
-        this.ffprobePath = ffprobePath;
     }
 
     public int getFps() {
         return fps;
     }
 
-    public void setFps(int fps) {
-        this.fps = fps;
-    }
-
     public int getGop() {
         return gop;
     }
 
-    public void setGop(int gop) {
-        this.gop = gop;
-    }
 }
